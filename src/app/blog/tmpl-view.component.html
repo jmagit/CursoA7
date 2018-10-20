@@ -1,7 +1,7 @@
 <img *ngIf="VM.Elemento.fotourl" [src]="VM.Elemento.fotourl">
 <div class="blog-post">
   <h2 class="blog-post-title">{{VM.Elemento.titulo}}&nbsp;
-    <input type="button" value="Editar" [routerLink]="['/blog', VM.Elemento.id, 'edit']" class="btn btn-link">
+    <button type="button" [routerLink]="['/blog', VM.Elemento.id, 'edit']" class="btn btn-link"><i class="fas fa-pen"></i></button>
   </h2>
   <p class="blog-post-meta">
     {{VM.Elemento.fecha | date:'dd/MM/yyyy'}} by {{VM.Elemento.autor}}

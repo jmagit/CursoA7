@@ -3,7 +3,7 @@
     <tr>
       <th>Nombre</th>
       <th>
-        <a routerLink="/personas/add">Añadir</a>
+        <a routerLink="/personas/add"><i class="fas fa-plus"></i></a>
       </th>
     </tr>
   </thead>
@@ -14,8 +14,8 @@
           {{item.nombre}} {{item.apellidos}}</a>
       </td>
       <td>
-        <input type="button" value="Editar" [routerLink]="['/personas', item.id, 'edit' ]">
-        <input type="button" value="Borrar" (click)="VM.remove(item.id)">
+        <button type="button" [routerLink]="['/personas', item.id, 'edit' ]"><i class="fas fa-pen"></i></button>
+        <button type="button" (click)="VM.remove(item.id)"><i class="fas fa-trash-alt"></i></button>
       </td>
     </tr>
   </tbody>

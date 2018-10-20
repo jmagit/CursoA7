@@ -1,0 +1,14 @@
+<div *ngIf="srv.Listado && srv.Listado.length > 0" class="container-fluid">
+  <div *ngFor="let item of srv.Listado; let i=index;" role="alert"
+    class="alert alert-dismissible fade show"
+    [class.alert-danger]="item.Tipo === 'error'"
+    [class.alert-warning]="item.Tipo === 'warn'">
+    {{item.Mensaje}}
+    <button type="button" class="close" aria-label="Close" (click)="srv.remove(i)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="text-center">
+    <input type="button" class="btn btn-dark" value="Cerrar" (click)="srv.clear()">
+  </div>
+</div>

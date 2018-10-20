@@ -10,7 +10,7 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "less"
+          "styleext": "css"
         }
       },
       "architect": {
@@ -27,9 +27,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@colorError: red;
+.error {
+  color: @colorError;
+}
+
+/* Formularios ******************************************************/
+form .ng-pristine {
+  margin-right: 5px;
+  border-color: navy;
+  box-shadow: 5px 5px 5px navy;
+}
+form .ng-dirty {
+  margin-right: 5px;
+  border-color: green;
+  box-shadow: 5px 5px 5px green;
+}
+form .ng-invalid {
+  border-color: red;
+  box-shadow: 5px 5px 5px @colorError;
+  margin-right: 10px;
+  transform: scale(1.02);
+  transition: all linear 1s;
+}
+form .ng-invalid-parse {
+  transition: all linear 1s;
+}

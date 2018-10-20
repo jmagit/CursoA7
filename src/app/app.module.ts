@@ -30,6 +30,8 @@ import { PERSONAS_COMPONENT } from './personas/personas.component';
 import { BLOG_COMPONENT } from './blog/blog.component';
 import { TARJETAS_COMPONENT } from './tarjetas/tarjetas.component';
 
+import {EditorModule} from 'primeng/editor';
+import {InplaceModule} from 'primeng/inplace';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,7 @@ import { TARJETAS_COMPONENT } from './tarjetas/tarjetas.component';
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(routes),
     AppRoutingModule, IndraCoreModule, MainModule, AppCommonModule, SecurityModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(), EditorModule, InplaceModule,
   ],
   providers: [
     LoggerService,

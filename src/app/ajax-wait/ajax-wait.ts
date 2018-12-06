@@ -32,7 +32,6 @@ export class AjaxWaitInterceptor implements HttpInterceptor {
 }
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'app-ajax-wait',
   template: `
   <div [hidden]="Oculto">

@@ -9,7 +9,7 @@ import { AuthService } from '../security';
 
 @Injectable({providedIn: 'root'})
 export class TarjetasDAOService {
-  private baseUrl = environment.WSUrl + 'tarjetas';
+  private baseUrl = environment.apiURL + 'tarjetas';
   private options = { withCredentials: true };
 
   constructor(private http: HttpClient) { }

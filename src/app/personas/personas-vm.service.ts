@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class PersonasDAOService {
-  private baseUrl = environment.WSUrl + 'personas';
+  private baseUrl = environment.apiURL + 'personas';
   private options = { withCredentials: true };
 
   constructor(private http: HttpClient) { }

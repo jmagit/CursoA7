@@ -32,6 +32,7 @@ import { TARJETAS_COMPONENT } from './tarjetas/tarjetas.component';
 
 import {EditorModule} from 'primeng/editor';
 import {InplaceModule} from 'primeng/inplace';
+import { AjaxWaitComponent, AjaxWaitInterceptor } from './ajax-wait/ajax-wait';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {InplaceModule} from 'primeng/inplace';
     CalculadoraComponent,
     DinamicosComponent, DynamicComponent, MyHostDirective,
     PERSONAS_COMPONENT, BLOG_COMPONENT, TARJETAS_COMPONENT,
+    AjaxWaitComponent,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(routes),
@@ -52,6 +54,7 @@ import {InplaceModule} from 'primeng/inplace';
     { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL },
     { provide: LOCALE_ID, useValue: 'es' },
     { provide: PersonasVMService, useClass: PersonasDAOVMService },
+    { provide: HTTP_INTERCEPTORS, useClass: AjaxWaitInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
     { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true, },
   ],

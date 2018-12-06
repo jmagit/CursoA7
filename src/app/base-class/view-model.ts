@@ -26,7 +26,7 @@ export class DAOService<T> implements IDAOService<T> {
   protected baseUrl: string;
 
   constructor(protected http: HttpClient, baseUrl: string, protected options = {}) {
-    this.baseUrl = environment.WSUrl + baseUrl;
+    this.baseUrl = environment.apiURL + baseUrl;
   }
   query(): Observable<T> {
     return this.http.get<T>(this.baseUrl, this.options);

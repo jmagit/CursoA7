@@ -19,6 +19,7 @@ export class LoggerService {
   }
   info(msg: string): void {
     if (this.nivel > 2) {
+      // tslint:disable-next-line:no-console
       if (console.info) {
         // tslint:disable-next-line:no-console
         console.info(msg);

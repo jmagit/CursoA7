@@ -195,6 +195,7 @@ export function NIFValidator(): ValidatorFn {
 }
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[valnif][formControlName],[valnif][formControl],[valnif][ngModel]',
   providers: [{ provide: NG_VALIDATORS, useExisting: NIFValidatorDirective, multi: true }]
 })

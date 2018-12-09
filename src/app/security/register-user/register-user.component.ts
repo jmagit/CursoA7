@@ -36,7 +36,7 @@ export class RegisterUserComponent implements OnInit {
       }, this.passwordMatchValidator),
       roles: new FormArray([])
     });
-    for (let name in this.miForm.controls) {
+    for (const name in this.miForm.controls) {
       if (this.miForm.controls[name] instanceof FormControl) {
         this.miForm.controls[name].valueChanges.subscribe(
           data => { this.formatErrorMessage(this.miForm.controls[name] as FormControl); }

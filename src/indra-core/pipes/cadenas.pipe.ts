@@ -4,8 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Acorta la cadena ...
  *
  * @export
- * @class ElipsisPipe
- * @implements {PipeTransform}
  */
 @Pipe({
   name: 'elipsis'

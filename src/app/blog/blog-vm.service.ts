@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NotificationService } from '../common-app';
 import { LoggerService } from '../../indra-core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { VMServiceBase, DAOService, VMDAOServiceBase } from '../base-code/view-model';
+import { NavigateService } from '../common-app/navigate.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +18,8 @@ export class BlogDAOService extends DAOService<any> {
   providedIn: 'root'
 })
 export class BlogVMService extends VMDAOServiceBase<BlogDAOService> {
-  constructor(dao: BlogDAOService, notify: NotificationService, out: LoggerService, router: Router) {
-    super(dao, notify, out, router, '/blog', 'id');
+  constructor(dao: BlogDAOService, notify: NotificationService, out: LoggerService, navigate: NavigateService) {
+    super(dao, notify, out, navigate, '/blog', 'id');
   }
 }
 

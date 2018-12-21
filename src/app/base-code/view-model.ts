@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ModoCRUD } from './types';
+import { NavigateService } from '../common-app/navigate.service';
 
 export interface IDAOService<T> {
   query(): Observable<T>;
@@ -53,7 +54,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
   protected response = new Subject();
 
   constructor(protected dao: T, protected notify: NotificationService, protected out: LoggerService,
-    private router: Router, protected urllist: string, protected pk = 'id') { }
+    protected navigate: NavigateService, protected urllist: string, protected pk = 'id') { }
 
   public get Modo() { return this.modo; }
   public get Listado() { return this.listado; }
@@ -114,7 +115,8 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
     this.elemento = {};
     this.idOriginal = null;
     // this.list();
-    this.router.navigateByUrl(this.urllist);
+    //this.navigate.navigateByUrl(this.urllist);
+    this.navigate.goBack();
   }
 
   public send() {

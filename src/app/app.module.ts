@@ -10,13 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IndraCoreModule, LoggerService, ERROR_LEVEL } from '../indra-core';
-import { RouterModule } from '@angular/router';
-import { routes } from './app.routes';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 
 import { MainModule } from './main/main.module';
-import { AppCommonModule } from './app-common';
 import { SecurityModule, AuthInterceptor, LoggingInterceptor } from './security';
 
 import { PersonasVMService, PersonasDAOVMService } from './personas/personas-vm.service';
@@ -33,6 +30,7 @@ import { TARJETAS_COMPONENT } from './tarjetas/tarjetas.component';
 import {EditorModule} from 'primeng/editor';
 import {InplaceModule} from 'primeng/inplace';
 import { AjaxWaitComponent, AjaxWaitInterceptor } from './ajax-wait/ajax-wait';
+import { CommonAppModule } from './common-app';
 
 @NgModule({
   declarations: [
@@ -45,8 +43,8 @@ import { AjaxWaitComponent, AjaxWaitInterceptor } from './ajax-wait/ajax-wait';
     AjaxWaitComponent,
   ],
   imports: [
-    BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(routes),
-    AppRoutingModule, IndraCoreModule, MainModule, AppCommonModule, SecurityModule,
+    BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule,
+    AppRoutingModule, IndraCoreModule, MainModule, CommonAppModule, SecurityModule,
     NgbModule.forRoot(), EditorModule, InplaceModule,
   ],
   providers: [

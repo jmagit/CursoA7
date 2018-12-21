@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { NotifyService } from '../app-common';
+import { NotificationService } from '../common-app';
 import { LoggerService } from '../../indra-core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ModoCRUD } from '../base-code/types';
+import { AuthService } from '../security';
 
 @Injectable({providedIn: 'root'})
 export class PersonasDAOService {
@@ -31,19 +33,21 @@ export class PersonasDAOService {
 
 @Injectable()
 export class PersonasDAOVMService {
-  private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
+  private modo: ModoCRUD = 'list';
   private listado: Array<any> = [];
   private elemento: any = {};
   private idOriginal = null;
   protected pk = 'id';
   protected urllist = '/personas';
 
-  constructor(private dao: PersonasDAOService, private nsrv: NotifyService,
-    private out: LoggerService, private router: Router) { }
+  constructor(private dao: PersonasDAOService, private notify: NotificationService,
+    private out: LoggerService, private router: Router, private auth: AuthService) { }
 
   public get Modo() { return this.modo; }
   public get Listado() { return this.listado; }
   public get Elemento() { return this.elemento; }
+  public get IsAutenticated() { return this.auth.isAutenticated; }
+  public get NotIsAutenticated() { return !this.auth.isAutenticated; }
 
   public list() {
     this.dao.query().subscribe(
@@ -51,7 +55,7 @@ export class PersonasDAOVMService {
         this.listado = data;
         this.modo = 'list';
       },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -67,7 +71,7 @@ export class PersonasDAOVMService {
         this.elemento = data;
         this.idOriginal = key;
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -77,7 +81,7 @@ export class PersonasDAOVMService {
         this.modo = 'view';
         this.elemento = data;
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -85,7 +89,7 @@ export class PersonasDAOVMService {
     if (!window.confirm('¿Seguro?')) { return; }
     this.dao.remove(key).subscribe(
       data => { this.list(); },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -101,13 +105,13 @@ export class PersonasDAOVMService {
       case 'add':
         this.dao.add(this.elemento).subscribe(
           data => { this.cancel(); },
-          error => { this.nsrv.add(error.message); }
+          error => { this.notify.add(error.message); }
         );
         break;
       case 'edit':
         this.dao.change(this.elemento).subscribe(
           data => { this.cancel(); },
-          error => { this.nsrv.add(error.message); }
+          error => { this.notify.add(error.message); }
         );
         break;
       case 'view':
@@ -120,17 +124,19 @@ export class PersonasDAOVMService {
 
 @Injectable()
 export class PersonasVMService {
-  private modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
+  private modo: ModoCRUD = 'list';
   private listado: Array<any> = [];
   private elemento: any = {};
   private idOriginal = null;
   protected pk = 'id';
 
-  constructor(private nsrv: NotifyService, private out: LoggerService) { }
+  constructor(private notify: NotificationService, private out: LoggerService, private auth: AuthService) { }
 
   public get Modo() { return this.modo; }
   public get Listado() { return this.listado; }
   public get Elemento() { return this.elemento; }
+  public get IsAutenticated() { return this.auth.isAutenticated; }
+  public get NotIsAutenticated() { return !this.auth.isAutenticated; }
 
   public list() {
     this.modo = 'list';
@@ -157,7 +163,7 @@ export class PersonasVMService {
       this.elemento = Object.assign({}, rslt);
       this.idOriginal = key;
     } else {
-      this.nsrv.add('encontrado');
+      this.notify.add('encontrado');
     }
   }
 
@@ -168,7 +174,7 @@ export class PersonasVMService {
       this.modo = 'view';
       this.elemento = Object.assign({}, rslt);
     } else {
-      this.nsrv.add('encontrado');
+      this.notify.add('encontrado');
     }
   }
 
@@ -180,7 +186,7 @@ export class PersonasVMService {
       this.listado.splice(indice, 1);
       this.list();
     } else {
-      this.nsrv.add('encontrado');
+      this.notify.add('encontrado');
     }
   }
 
@@ -203,7 +209,7 @@ export class PersonasVMService {
             this.listado[indice] = this.elemento;
             this.list();
           } else {
-            this.nsrv.add('encontrado');
+            this.notify.add('encontrado');
           }
           break;
       case 'view':

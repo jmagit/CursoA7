@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NotifyService } from './app-common';
 import { Router, NavigationEnd, ActivatedRoute, ActivationStart } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NotificationService } from './common-app';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,14 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private ns: NotifyService, private router: Router, private title: Title) {
+  constructor(private notify: NotificationService, private router: Router, private title: Title) {
+    // this.notify.Notificacion.subscribe(n => {
+    //   window.alert(`Suscripcion: ${n.Message}`);
+    //   this.notify.remove(0);
+    // });
   }
 
   ngOnInit(): void {
-    // this.ns.add('Demo error en AppComponent');
     this.router.events.subscribe(ev => {
       if (ev instanceof ActivationStart) {
         if ((ev as ActivationStart).snapshot.data && (ev as ActivationStart).snapshot.data.pageTitle) {

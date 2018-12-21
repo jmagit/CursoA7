@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { NotifyService } from '../app-common';
 import { LoggerService } from '../../indra-core';
+import { NotificationService } from '../common-app';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -39,7 +39,7 @@ export class TarjetasVMService {
   protected pk = 'id';
   protected urllist = '/tarjetas';
 
-  constructor(private dao: TarjetasDAOService, private nsrv: NotifyService,
+  constructor(private dao: TarjetasDAOService, private notify: NotificationService,
     private out: LoggerService, private router: Router, private auth: AuthService) { }
 
   public get Modo() { return this.modo; }
@@ -52,7 +52,7 @@ export class TarjetasVMService {
         this.listado = data;
         this.modo = 'list';
       },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -68,7 +68,7 @@ export class TarjetasVMService {
         this.elemento = data;
         this.idOriginal = key;
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -78,7 +78,7 @@ export class TarjetasVMService {
         this.modo = 'view';
         this.elemento = data;
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -86,7 +86,7 @@ export class TarjetasVMService {
     if (!window.confirm('¿Seguro?')) { return; }
     this.dao.remove(key).subscribe(
       data => { this.list(); },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -102,13 +102,13 @@ export class TarjetasVMService {
       case 'add':
         this.dao.add(this.elemento).subscribe(
           data => { this.cancel(); },
-          error => { this.nsrv.add(error.message); }
+          error => { this.notify.add(error.message); }
         );
         break;
       case 'edit':
         this.dao.change(this.elemento).subscribe(
           data => { this.cancel(); },
-          error => { this.nsrv.add(error.message); }
+          error => { this.notify.add(error.message); }
         );
         break;
       case 'view':

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggerService, ElipsisPipe } from '../../indra-core';
-import { NotifyService } from '../app-common';
+import { NotificationService } from '../common-app';
 
 @Component({
   selector: 'app-demo',
@@ -22,7 +22,7 @@ export class DemoComponent implements OnInit {
   conEstilo = { error: false, importante: true, destacar: false };
   font = 24;
 
-  constructor(private out: LoggerService, private nsrv: NotifyService) { }
+  constructor(private out: LoggerService, private nsrv: NotificationService) { }
 
   get Notificaciones() { return this.nsrv; }
 

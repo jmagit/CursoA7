@@ -24,12 +24,12 @@ export class AuthService {
   get isAutenticated() { return this.isAuth; }
   get Name() { return this.name; }
 
-  login(isAuth: boolean, authToken: string, name: string ) {
-    this.isAuth = isAuth;
+  login(authToken: string, name: string) {
+    this.isAuth = true;
     this.authToken = authToken;
     this.name = name;
     if (localStorage) {
-      localStorage.AuthService = JSON.stringify({isAuth, authToken, name});
+      localStorage.AuthService = JSON.stringify({ isAuth: this.isAuth, authToken, name });
     }
   }
   logout() {
@@ -53,7 +53,9 @@ export class LoginService {
       this.http.post('http://localhost:4321/login', { name: usr, password: pwd })
         .subscribe(
           data => {
-            this.auth.login(data['success'], data['token'], data['name']);
+            if (data['success'] === true) {
+              this.auth.login(data['token'], data['name']);
+            }
             observable.next(this.auth.isAutenticated);
           },
           (err: HttpErrorResponse) => { observable.error(err); }
@@ -70,7 +72,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.withCredentials && !this.auth.isAutenticated) {
+    if (!req.withCredentials || ! this.auth.isAutenticated) {
       return next.handle(req);
     }
     const authReq = req.clone(

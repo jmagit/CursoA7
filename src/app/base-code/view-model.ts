@@ -1,9 +1,10 @@
-import { NotifyService } from '../app-common';
+import { NotificationService } from '../common-app';
 import { LoggerService } from '../../indra-core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ModoCRUD } from './types';
 
 export interface IDAOService<T> {
   query(): Observable<T>;
@@ -45,13 +46,13 @@ export class DAOService<T> implements IDAOService<T> {
   }
 }
 export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService {
-  protected modo: 'list' | 'add' | 'edit' | 'view' | 'delete' = 'list';
+  protected modo: ModoCRUD = 'list';
   protected listado: Array<any> = [];
   protected elemento: any = {};
   protected idOriginal = null;
   protected response = new Subject();
 
-  constructor(protected dao: T, protected nsrv: NotifyService, protected out: LoggerService,
+  constructor(protected dao: T, protected notify: NotificationService, protected out: LoggerService,
     private router: Router, protected urllist: string, protected pk = 'id') { }
 
   public get Modo() { return this.modo; }
@@ -66,7 +67,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
         this.modo = 'list';
         this.response.next(data);
       },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -83,7 +84,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
         this.idOriginal = key;
         this.response.next(this.elemento);
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -94,7 +95,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
         this.elemento = data;
         this.response.next(this.elemento);
         },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -105,7 +106,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
         this.cancel();
         this.response.next(data);
       },
-      error => { this.nsrv.add(error.message); }
+      error => { this.notify.add(error.message); }
     );
   }
 
@@ -124,7 +125,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
             this.cancel();
             this.response.next(data);
           },
-          error => { this.nsrv.add(error.message); }
+          error => { this.notify.add(error.message); }
         );
         break;
       case 'edit':
@@ -133,7 +134,7 @@ export class VMDAOServiceBase<T extends IDAOService<any>> implements IVMService 
             this.cancel();
             this.response.next(data);
           },
-           error => { this.nsrv.add(error.message); }
+           error => { this.notify.add(error.message); }
         );
         break;
       case 'view':
@@ -149,7 +150,7 @@ export class VMServiceBase implements IVMService {
   protected elemento: any = {};
   protected idOriginal = null;
 
-  constructor(protected nsrv: NotifyService, protected out: LoggerService, protected pk = 'id') { }
+  constructor(protected notify: NotificationService, protected out: LoggerService, protected pk = 'id') { }
 
   public get Modo() { return this.modo; }
   public get Listado() { return this.listado; }
@@ -172,7 +173,7 @@ export class VMServiceBase implements IVMService {
       this.elemento = Object.assign({}, rslt);
       this.idOriginal = key;
     } else {
-      this.nsrv.add('Elemento no encontrado.');
+      this.notify.add('Elemento no encontrado.');
     }
   }
 
@@ -183,7 +184,7 @@ export class VMServiceBase implements IVMService {
       this.modo = 'view';
       this.elemento = Object.assign({}, rslt);
     } else {
-      this.nsrv.add('Elemento no encontrado.');
+      this.notify.add('Elemento no encontrado.');
     }
   }
 
@@ -195,7 +196,7 @@ export class VMServiceBase implements IVMService {
       this.listado.splice(indice, 1);
       this.list();
     } else {
-      this.nsrv.add('Elemento no encontrado.');
+      this.notify.add('Elemento no encontrado.');
     }
   }
 
@@ -218,7 +219,7 @@ export class VMServiceBase implements IVMService {
             this.listado[indice] = this.elemento;
             this.list();
           } else {
-            this.nsrv.add('Elemento no encontrado.');
+            this.notify.add('Elemento no encontrado.');
           }
           break;
       case 'view':

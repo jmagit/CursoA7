@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/serguridad.service';
-import { NotifyService } from '../../app-common';
+import { NotificationService } from '../../common-app';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   txtUsuario = 'admin';
   txtPassword = 'P@$$w0rd';
 
-  constructor(public loginSrv: LoginService, private nsrv: NotifyService, private router: Router) { }
+  constructor(public loginSrv: LoginService, private notify: NotificationService, private router: Router) { }
 
   ngOnInit() {
     this.cambiaTexto();
@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit {
           if (data) {
             this.cambiaTexto();
           } else {
-            this.nsrv.add('Usuario o contraseña invalida.');
+            this.notify.add('Usuario o contraseña invalida.');
           }
         },
-        err => { this.nsrv.add(err.message); }
+        err => { this.notify.add(err.message); }
       );
     }
   }

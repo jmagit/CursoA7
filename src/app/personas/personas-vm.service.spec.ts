@@ -4,7 +4,7 @@ import { PersonasVMService, PersonasDAOService } from './personas-vm.service';
 import { LoggerService } from '../../indra-core';
 import { Router } from '@angular/router';
 import { DAOServiceMock } from '../../testing/dao-service-stub';
-import { DAOService } from '../base-class/view-model';
+import { DAOService } from '../base-code/view-model';
 
 describe('PersonasVMService', () => {
   beforeEach(() => {

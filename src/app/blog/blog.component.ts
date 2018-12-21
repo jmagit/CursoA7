@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogVMService } from './blog-vm.service';
-import { BaseListComponent, BaseAddComponent, BaseEditComponent, BaseViewComponent } from '../base-class/vm-component';
+import { BaseListComponent, BaseAddComponent, BaseEditComponent, BaseViewComponent } from '../base-code/vm-component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 

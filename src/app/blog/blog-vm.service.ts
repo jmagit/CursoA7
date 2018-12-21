@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { NotifyService } from '../app-common';
+import { NotificationService } from '../common-app';
 import { LoggerService } from '../../indra-core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { VMServiceBase, DAOService, VMDAOServiceBase } from '../base-class/view-model';
+import { VMServiceBase, DAOService, VMDAOServiceBase } from '../base-code/view-model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,8 @@ export class BlogDAOService extends DAOService<any> {
   providedIn: 'root'
 })
 export class BlogVMService extends VMDAOServiceBase<BlogDAOService> {
-  constructor(dao: BlogDAOService, nsrv: NotifyService, out: LoggerService, router: Router) {
-    super(dao, nsrv, out, router, '/blog', 'id');
+  constructor(dao: BlogDAOService, notify: NotificationService, out: LoggerService, router: Router) {
+    super(dao, notify, out, router, '/blog', 'id');
   }
 }
 
@@ -28,8 +28,8 @@ export class BlogVMService extends VMDAOServiceBase<BlogDAOService> {
   providedIn: 'root'
 })
 export class BlogVMServiceOld extends VMServiceBase {
-  constructor(nsrv: NotifyService, out: LoggerService) {
-    super(nsrv, out, 'id');
+  constructor(notify: NotificationService, out: LoggerService) {
+    super(notify, out, 'id');
   }
   public list() {
     this.modo = 'list';

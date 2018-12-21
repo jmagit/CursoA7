@@ -3,8 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { User, RegisterUserDAO, LoginService } from '../services/serguridad.service';
 import { Router } from '@angular/router';
 import { LoggerService } from '../../../indra-core';
-import { NotifyService } from '../../app-common';
-
+import { NotificationService, NotificationType } from '../../common-app';
 
 @Component({
   selector: 'app-register-user',
@@ -15,7 +14,7 @@ export class RegisterUserComponent implements OnInit {
   public miForm: FormGroup;
   private model: User = new User();
 
-  constructor(private dao: RegisterUserDAO, private nsrv: NotifyService,
+  constructor(private dao: RegisterUserDAO, private notify: NotificationService,
     private out: LoggerService, private router: Router, private login: LoginService) { }
 
   passwordMatchValidator(g: FormGroup) {
@@ -80,16 +79,16 @@ export class RegisterUserComponent implements OnInit {
         this.login.login(data.idUsuario, data.password.passwordValue).subscribe(
           datos => {
             if (datos) {
-              this.nsrv.add('Ususario reguistrado', 'log');
+              this.notify.add('Ususario reguistrado', NotificationType.log);
               this.router.navigateByUrl('/');
             } else {
-              this.nsrv.add('Error en el registro.');
+              this.notify.add('Error en el registro.');
             }
           },
-          err => { this.nsrv.add(err.message); }
+          err => { this.notify.add(err.message); }
         );
       },
-      err => { this.nsrv.add(err.message); }
+      err => { this.notify.add(err.message); }
     );
   }
 }

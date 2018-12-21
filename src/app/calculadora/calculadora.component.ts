@@ -4,10 +4,12 @@ import { LoggerService } from '../../indra-core';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'calculadora',
-  templateUrl: './calculadora.component.1.html',
+  templateUrl: './calculadora.component.html',
   styleUrls: ['./calculadora.component.css']
 })
 export class CalculadoraComponent implements OnInit, OnChanges {
+  public readonly Math = Math;
+
   private acumulado: number = 0;
   private operador: string = '+';
   private limpiar: boolean = true;
@@ -17,13 +19,26 @@ export class CalculadoraComponent implements OnInit, OnChanges {
 
   @Input() private init: string;
   @Output() updated: EventEmitter<any> = new EventEmitter();
+  private separadorDecimal: string = '.';
 
   constructor(private out: LoggerService) { }
 
   get Pantalla(): string { return this.pantalla; }
+  // set Pantalla(value: string) {
+  //   if (!Number.isNaN(parseFloat(value)) || value === '-') {
+  //     this.pantalla = value;
+  //   }
+  // }
   get Resumen(): string { return this.resumen; }
   get EsElResultado() { return this.limpiar; }
-
+  get SeparadorDecimal() { return this.separadorDecimal; }
+  @Input() set SeparadorDecimal(value: string) {
+    if (value !== this.separadorDecimal && (value === '.' || value === ',')) {
+        this.separadorDecimal = value;
+    } else {
+      this.out.error('Separador decimal no reconocido.');
+    }
+  }
   inicia() {
     this.acumulado = 0;
     this.operador = '+';

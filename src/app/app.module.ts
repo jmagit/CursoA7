@@ -8,7 +8,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angular/common/http';
 import { IndraCoreModule, LoggerService, ERROR_LEVEL } from '../indra-core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
@@ -44,6 +44,7 @@ import { CommonAppModule } from './common-app';
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule,
+    // HttpClientXsrfModule.withOptions({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN', }),
     AppRoutingModule, IndraCoreModule, MainModule, CommonAppModule, SecurityModule,
     NgbModule.forRoot(), EditorModule, InplaceModule,
   ],
